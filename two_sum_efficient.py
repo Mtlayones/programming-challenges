@@ -12,17 +12,24 @@ class Solution(object):
 
     def twoSum(self, nums, target):
         newArray = []
+        # mapping index and the values in the list
         for itr in range(len(nums)):
             newArray.append((itr, nums[itr]))
+        # sorting the map for better searching
         newArray = sorted(newArray,  key=lambda x: x[1])
-        for itr in range(len(newArray)):
-            findElement = target - newArray[itr][1]
-            if findElement < newArray[itr][1] and findElement < 0:
+        # iterating through the list
+
+        while len(newArray) != 0:
+            # dequeuing an element in array
+            currentElement = newArray.pop(0)
+            # getting the other element in list
+            findElement = target - currentElement[1]
+            # no found element
+            if findElement < currentElement[1] and findElement < 0:
                 break
-            tempArray = newArray[:]
-            tempArray.remove(newArray[itr])
-            index = self.binarySearch(tempArray, findElement)
+            # getting the index of other element through binary search
+            index = self.binarySearch(newArray, findElement)
+            # no found element
             if index != -1:
-                return [newArray[itr][0], index]
-            tempArray = newArray[:]
+                return [currentElement[0], index]
         return [-1, -1]
